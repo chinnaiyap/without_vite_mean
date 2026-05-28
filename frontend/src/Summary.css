@@ -1,0 +1,234 @@
+/* ===== PAGE BACKGROUND ===== */
+
+/* body {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3)
+    ),
+  url(./images/bg.jpg) ;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Poppins", sans-serif;
+} */
+
+body {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+.summary-page {
+  padding: 30px 15px;
+}
+
+/* ===== TITLE ===== */
+
+.summary-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.summary-total {
+  text-align: center;
+  color: #475569;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+/* ===== TABLE ===== */
+
+.summary-table {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: none !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.summary-table thead {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: white;
+}
+
+.summary-table thead th {
+  padding: 18px !important;
+  border: none !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.summary-table tbody td {
+  padding: 18px !important;
+  vertical-align: middle;
+  border-color: #e2e8f0 !important;
+  font-size: 15px;
+  color: #334155;
+}
+
+.summary-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.summary-table tbody tr:hover {
+  background-color: #f8fafc;
+  transform: scale(1.005);
+}
+
+/* ===== VIEW BUTTON ===== */
+
+.view-btn {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(20, 184, 166, 0.3);
+}
+
+/* ===== MODAL ===== */
+
+.custom-modal {
+  border-radius: 24px !important;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* ===== MODAL HEADER ===== */
+
+.modal-header {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  border-bottom: none;
+  padding: 20px 25px;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.btn-close {
+  filter: invert(1);
+}
+
+/* ===== MODAL BODY ===== */
+
+.modal-body {
+  padding: 25px;
+}
+
+/* ===== TEXT ===== */
+
+.location-text {
+  color: #0f766e;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.total-text {
+  color: #7c3aed;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ===== SUMMARY PAGE BUTTONS ===== */
+
+.summary-edit-btn {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.summary-edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(168, 85, 247, 0.35);
+}
+
+.summary-update-btn {
+  background: linear-gradient(135deg, #059669, #34d399);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.summary-update-btn:hover {
+  transform: translateY(-2px);
+  /*(translateY(2px))==>Move DOWN*/
+  /*translateY(-2px)==>Move UP*/
+  box-shadow: 0 10px 20px rgba(52, 211, 153, 0.35);
+}
+
+.summary-delete-btn {
+  background: linear-gradient(135deg, #dc2626, #f87171);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.summary-delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(248, 113, 113, 0.35);
+}
+
+.summary-cancel-btn {
+  background: linear-gradient(135deg, #475569, #94a3b8);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.summary-cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(148, 163, 184, 0.35);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .summary-title {
+    font-size: 2rem;
+  }
+
+  .summary-table thead {
+    font-size: 14px;
+  }
+
+  .summary-table tbody td {
+    font-size: 13px;
+    padding: 12px !important;
+  }
+
+  .view-btn {
+    width: 100%;
+  }
+}
