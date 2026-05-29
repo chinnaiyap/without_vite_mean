@@ -7,7 +7,8 @@ export default function LocationTodos() {
 
   const { city } = useParams();
 
-  const apiUrl = "http://localhost:8000";
+  // const apiUrl = "http://localhost:8000";
+  const apiUrl = "https://backend-gkms.onrender.com";
 
   useEffect(() => {
     fetch(`${apiUrl}/todos/location/${city}`)
