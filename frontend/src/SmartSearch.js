@@ -15,7 +15,8 @@ export default function SmartSearch() {
 
   const navigate = useNavigate();
 
-  const apiUrl = "http://localhost:8000";
+  // const apiUrl = "http://localhost:8000";
+  const apiUrl = "https://backend-gkms.onrender.com";
 
   // SEARCH
   const handleSearch = (value) => {

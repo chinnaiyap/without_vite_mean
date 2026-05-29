@@ -39,7 +39,7 @@ export default function Todo() {
 
   // const apiUrl = import.meta.env.VITE_API;
   // const apiUrl = "http://localhost:8000";
-  const apiUrl = https://backend-gkms.onrender.com;
+  const apiUrl = "https://backend-gkms.onrender.com";
   // const apiUrl = "";
 
   const handleSubmit = () => {
