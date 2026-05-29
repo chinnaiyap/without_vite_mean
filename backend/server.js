@@ -291,7 +291,18 @@ app.get("/todos/location/:location", async (req, res) => {
 });
 
 // //Start the server
+// const port = 8000;
+// app.listen(port, () => {
+//   console.log("Server is listening to port " + port);
+// });
+//====================NEW CODE====================//
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully");
+});
+
+// Start server
 const port = 8000;
 app.listen(port, () => {
   console.log("Server is listening to port " + port);
 });
+//====================NEW CODE====================//
