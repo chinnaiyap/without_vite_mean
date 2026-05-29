@@ -50,13 +50,24 @@ export default function Todo() {
       description.trim() !== "" &&
       location.trim() !== ""
     ) {
-      fetch("/todos", {
+      // fetch("/todos", {
 
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json", //
+      //   },
+      //   body: JSON.stringify({ title, description, location }), //
+      // })
+      fetch(`${apiUrl}/todos`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", //
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, description, location }), //
+        body: JSON.stringify({
+          title,
+          description,
+          location,
+        }),
       })
         .then((res) => {
           if (res.ok) {
