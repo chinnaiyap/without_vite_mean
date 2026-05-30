@@ -70,22 +70,43 @@ export default function Todo() {
           location,
         }),
       })
+        //==========OLD==========//
+        // .then((res) => {
+        //   if (res.ok) {
+        //     //add item to list
+        //     setTodos([...todos, { title, description, location }]);
+        //     setTitle("");
+        //     setDesciption("");
+        //     setLocation("");
+        //     setMessage("Item added successfully");
+        //     setTimeout(() => {
+        //       setMessage("");
+        //     }, 3000);
+        //   } else {
+        //     //set error
+        //     setError("Unable to create Todo item");
+        //   }
+        // })
+        //==========NEW==========//
         .then((res) => {
           if (res.ok) {
-            //add item to list
-            setTodos([...todos, { title, description, location }]);
+            getItems();
+
             setTitle("");
             setDesciption("");
             setLocation("");
+
             setMessage("Item added successfully");
+
             setTimeout(() => {
               setMessage("");
             }, 3000);
           } else {
-            //set error
             setError("Unable to create Todo item");
           }
         })
+        //==========NEW==========//
+        //==========OLD==========//
         .catch(() => {
           setError("Unable to create Todo item");
         });
@@ -93,7 +114,6 @@ export default function Todo() {
   };
 
   //Fix useEffect AJAX Call
-  
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       // empty search
@@ -138,17 +158,28 @@ export default function Todo() {
       return;
     }
 
-    fetch(`${apiUrl}/todos/search?query=${value}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTodos(data);
-      })
-      .catch(() => {
-        setError("Search failed");
-      });
+    // fetch(`${apiUrl}/todos/search?query=${value}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setTodos(data);
+    //   })
+    //   .catch(() => {
+    //     setError("Search failed");
+    //   });
   };
 
   //Update getItems()
+  // const getItems = () => {
+  //   fetch(
+  //     `${apiUrl}/todos?page=${page}&limit=5&startDate=${startDate}&endDate=${endDate}&filterLocation=${filterLocation}`,
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setTodos(data.todos);
+  //       setTotalPages(data.totalPages);
+  //     });
+  // };
+
   const getItems = () => {
     fetch(
       `${apiUrl}/todos?page=${page}&limit=5&startDate=${startDate}&endDate=${endDate}&filterLocation=${filterLocation}`,
@@ -159,6 +190,11 @@ export default function Todo() {
         setTotalPages(data.totalPages);
       });
   };
+
+  // ADD THIS
+  useEffect(() => {
+    getItems();
+  }, [page]);
 
 
   const handleEdit = (item) => {
