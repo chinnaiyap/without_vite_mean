@@ -1,15 +1,20 @@
 // Using Express
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require('cors'); // 1. Import CORS
 require("dotenv").config();
 
-// create an instance of express
+// Create an instance of express
 const app = express();
 
-// Middleware - Setup CORS correctly AFTER creating app instance
-app.use(cors({ origin: 'https://f-zo9g.onrender.com' }));
-app.use(express.json());
+// 2. Setup your single, explicit CORS rule right here!
+app.use(cors({ 
+  origin: 'https://f-zo9g.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
+
+app.use(express.json()); // Parsing JSON middleware
 
 // connecting mongodb
 mongoose
