@@ -49,6 +49,18 @@ todoSchema.index({ location: "text", title: "text" });
 // creating model
 const todoModel = mongoose.model("Todo", todoSchema);
 
+// Add this route to your active server.js code!
+app.get("/todos/location/:location", async (req, res) => {
+  try {
+    const todos = await todoModel.find({
+      location: req.params.location,
+    });
+    res.json({ todos });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching todos", error: error.message });
+  }
+});
+
 // Create a new todo item - CHANGED FROM router.post TO app.post AND FIXED model
 app.post('/todos', async (req, res) => {
     try {
@@ -132,6 +144,7 @@ app.get("/todos/summary", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Aggregation + Pagination
 app.get("/todos", async (req, res) => {

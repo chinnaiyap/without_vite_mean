@@ -56,14 +56,14 @@ export default function Todo() {
         });
 
         if (res.ok) {
-          const savedTodoFromMongo = await res.json();
-          setTodos([...todos, savedTodoFromMongo]);
+  const savedTodoFromMongo = await res.json();
+  setTodos([...todos, savedTodoFromMongo]);
 
           setTitle('');
-          setDesciption('');
-          setLocation('');
+  setDesciption(''); 
+  setLocation('');
           
-          setMessage("Item added successfully");
+           setMessage("Item added successfully");
           setTimeout(() => {
             setMessage("");
           }, 3000);
