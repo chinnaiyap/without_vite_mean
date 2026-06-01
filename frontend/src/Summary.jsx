@@ -27,14 +27,36 @@ export default function Summary() {
   // const apiUrl = import.meta.env.VITE_API_URL;
 
   // Summary data
+  //=========NEW=========//
   useEffect(() => {
-    fetch(`${apiUrl}/todos/summary`)
-      .then((res) => res.json())
-      .then((res) => {
-        setData(res.summary);
-        setTotal(res.totalTodos);
-      });
-  }, []);
+  fetch(`${apiUrl}/todos/summary`)
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+
+      setData(res.summary || []);
+      setTotal(res.totalTodos || 0);
+    })
+    .catch((err) => {
+      console.log(err);
+      setData([]);
+    });
+}, []);
+  //=========NEW=========//
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/todos/summary`)
+  //     .then((res) => res.json())
+  //     // .then((res) => {
+  //     //   setData(res.summary);
+  //     //   setTotal(res.totalTodos);
+  //     // });     //=========OLD=========//
+  //     //=========NEW=========//
+  //     .then((res) => {
+  //       setData(res.summary || []);
+  //       setTotal(res.totalTodos || 0);
+  //     });
+  //   //=========NEW=========//
+  // }, []);
 
   // Open modal and get todos by location
   const handleView = (item) => {
@@ -129,24 +151,25 @@ export default function Summary() {
         </thead>
 
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.location}</td>
-              <td>{item.totalTodos}</td>
+          {Array.isArray(data) &&
+            data.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.location}</td>
+                <td>{item.totalTodos}</td>
 
-              <td>
-                <button
-                  className="view-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#todoModal"
-                  onClick={() => handleView(item)}
-                >
-                  View
-                </button>
-              </td>
-            </tr>
-          ))}
+                <td>
+                  <button
+                    className="view-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#todoModal"
+                    onClick={() => handleView(item)}
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 

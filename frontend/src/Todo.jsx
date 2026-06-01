@@ -42,74 +42,115 @@ export default function Todo() {
   const apiUrl = "https://backend-gkms.onrender.com";
   // const apiUrl = "";
 
-  const handleSubmit = () => {
-    //Supmit
+  // const handleSubmit = () => {
+  //   //Supmit
+  //   setError("");
+  //   //check inputs
+  //   if (
+  //     title.trim() !== "" &&
+  //     description.trim() !== "" &&
+  //     location.trim() !== ""
+  //   ) {
+  //     // fetch("/todos", {
+
+  //     //   method: "POST",
+  //     //   headers: {
+  //     //     "Content-Type": "application/json", //
+  //     //   },
+  //     //   body: JSON.stringify({ title, description, location }), //
+  //     // })
+  //     fetch(`${apiUrl}/todos`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         title,
+  //         description,
+  //         location,
+  //       }),
+  //     })
+  //       .then((res) => {
+  //         if (res.ok) {
+  //           // 1. Wait for MongoDB's response data (which includes the new _id)
+  //           const savedTodoFromMongo = await res.json();
+
+  //           // 2. Append the complete MongoDB document to your state array
+  //           setTodos([...todos, savedTodoFromMongo]);
+
+  //           // 3. Clear your form inputs so they are ready for the next entry
+  //           setTitle('');
+  //           setDescription('');
+  //           setLocation('');
+  //         } else {
+  //           console.error("Failed to save to MongoDB. Server status:", res.status);
+  //         }
+  //         //   if (res.ok) {
+  //         //     //add item to list
+  //         //     setTodos([...todos, { title, description, location }]);
+  //         //     setTitle("");
+  //         //     setDesciption("");
+  //         //     setLocation("");
+  //         //     setMessage("Item added successfully");
+  //         //     setTimeout(() => {
+  //         //       setMessage("");
+  //         //     }, 3000);
+  //         //   } else {
+  //         //     //set error
+  //         //     setError("Unable to create Todo item");
+  //         //   }
+  //       }
+  //       )
+  //       .catch(() => {
+  //         setError("Unable to create Todo item");
+  //       });
+  //   }
+  // };/ OLD//
+
+  //
+  const handleSubmit = async () => {
     setError("");
-    //check inputs
+    // Check inputs
     if (
       title.trim() !== "" &&
       description.trim() !== "" &&
       location.trim() !== ""
     ) {
-      // fetch("/todos", {
-
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json", //
-      //   },
-      //   body: JSON.stringify({ title, description, location }), //
-      // })
-      fetch(`${apiUrl}/todos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          location,
-        }),
-      })
-        //==========OLD==========//
-        // .then((res) => {
-        //   if (res.ok) {
-        //     //add item to list
-        //     setTodos([...todos, { title, description, location }]);
-        //     setTitle("");
-        //     setDesciption("");
-        //     setLocation("");
-        //     setMessage("Item added successfully");
-        //     setTimeout(() => {
-        //       setMessage("");
-        //     }, 3000);
-        //   } else {
-        //     //set error
-        //     setError("Unable to create Todo item");
-        //   }
-        // })
-        //==========NEW==========//
-        .then((res) => {
-          if (res.ok) {
-            getItems();
-
-            setTitle("");
-            setDesciption("");
-            setLocation("");
-
-            setMessage("Item added successfully");
-
-            setTimeout(() => {
-              setMessage("");
-            }, 3000);
-          } else {
-            setError("Unable to create Todo item");
-          }
-        })
-        //==========NEW==========//
-        //==========OLD==========//
-        .catch(() => {
-          setError("Unable to create Todo item");
+      try {
+        const res = await fetch(`${apiUrl}/todos`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            location,
+          }),
         });
+
+        if (res.ok) {
+          // 1. Wait for MongoDB's response data (which includes the new _id)
+          const savedTodoFromMongo = await res.json();
+          
+          // 2. Append the complete MongoDB document to your state array
+          setTodos([...todos, savedTodoFromMongo]);
+
+          // 3. Clear your form inputs so they are ready for the next entry
+          setTitle('');
+          setDesciption(''); // Note: your state setter is spelled 'setDesciption'
+          setLocation('');
+          
+          setMessage("Item added successfully");
+          setTimeout(() => {
+            setMessage("");
+          }, 3000);
+        } else {
+          setError("Unable to create Todo item");
+        }
+      } catch (err) {
+        setError("Unable to create Todo item");
+      }
     }
   };
 
@@ -127,14 +168,50 @@ export default function Todo() {
         return;
       }
 
-      fetch(`${apiUrl}/todos?page=${page}&limit=5&search=${search}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setTodos(data.todos);
-          setTotalPages(data.totalPages);
+      // fetch(`${apiUrl}/todos?page=${page}&limit=5&search=${search}`)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     setTodos(data.todos);
+      //     setTotalPages(data.totalPages);
+      //   })
+      //   .catch(() => {
+      //     setError("Search failed");
+      //   });
+
+      fetch(`${apiUrl}/todos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          location,
+        }),
+      })
+        .then(async (res) => { // <-- Added 'async' here
+          if (res.ok) {
+            // 1. Wait for MongoDB's response data (which includes the new _id)
+            const savedTodoFromMongo = await res.json();
+            
+            // 2. Append the complete MongoDB document to your state array
+            setTodos([...todos, savedTodoFromMongo]);
+
+            // 3. Clear your form inputs so they are ready for the next entry
+            setTitle('');
+            setDesciption('');
+            setLocation('');
+
+            setMessage("Item added successfully");
+            setTimeout(() => {
+              setMessage("");
+            }, 3000);
+          } else {
+            setError("Unable to create Todo item");
+          }
         })
         .catch(() => {
-          setError("Search failed");
+          setError("Unable to create Todo item");
         });
     }, 500);
 
@@ -158,28 +235,17 @@ export default function Todo() {
       return;
     }
 
-    // fetch(`${apiUrl}/todos/search?query=${value}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setTodos(data);
-    //   })
-    //   .catch(() => {
-    //     setError("Search failed");
-    //   });
+    fetch(`${apiUrl}/todos/search?query=${value}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTodos(data);
+      })
+      .catch(() => {
+        setError("Search failed");
+      });
   };
 
   //Update getItems()
-  // const getItems = () => {
-  //   fetch(
-  //     `${apiUrl}/todos?page=${page}&limit=5&startDate=${startDate}&endDate=${endDate}&filterLocation=${filterLocation}`,
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setTodos(data.todos);
-  //       setTotalPages(data.totalPages);
-  //     });
-  // };
-
   const getItems = () => {
     fetch(
       `${apiUrl}/todos?page=${page}&limit=5&startDate=${startDate}&endDate=${endDate}&filterLocation=${filterLocation}`,
@@ -190,11 +256,6 @@ export default function Todo() {
         setTotalPages(data.totalPages);
       });
   };
-
-  // ADD THIS
-  useEffect(() => {
-    getItems();
-  }, [page]);
 
 
   const handleEdit = (item) => {
@@ -458,3 +519,5 @@ export default function Todo() {
     </div>
   );
 }
+
+

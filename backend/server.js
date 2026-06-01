@@ -1,7 +1,10 @@
 // //Using Express
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
+
+const cors = require('cors');
+app.use(cors({ origin: 'https://f-zo9g.onrender.com' }));
 
 require("dotenv").config();
 
@@ -51,19 +54,39 @@ todoSchema.index({ location: "text", title: "text" });
 const todoModel = mongoose.model("Todo", todoSchema);
 
 // //Create a new todo item
-app.post("/todos", async (req, res) => {
-  //next logig statement
-  const { title, description, location } = req.body; //
+// app.post("/todos", async (req, res) => {
+//   //next logig statement
+//   const { title, description, location } = req.body; //
 
-  try {
-    const newTodo = new todoModel({ title, description, location }); //
-    await newTodo.save();
-    res.status(201).json(newTodo);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
-  }
+//   try {
+//     const newTodo = new todoModel({ title, description, location }); //
+//     await newTodo.save();
+//     res.status(201).json(newTodo);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+router.post('/todos', async (req, res) => {
+    try {
+        const newTodo = new Todo({
+            title: req.body.title,
+            description: req.body.description,
+            location: req.body.location
+        });
+        
+        // Save to MongoDB
+        const savedTodo = await newTodo.save(); 
+        
+        // Send the document (including its new _id) back to the frontend
+        res.status(201).json(savedTodo); 
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
+
+
 
 // // Update a todo item
 app.put("/todos/:id", async (req, res) => {
