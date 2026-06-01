@@ -17,14 +17,26 @@ app.use(cors({
 app.use(express.json()); // Parsing JSON middleware
 
 // connecting mongodb
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("MongoDB Connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// mongoose
+//   .connect(process.env.MONGO_URL)
+//   .then(() => {
+//     console.log("MongoDB Connected");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });                          //====OLD
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_URL);
+    console.log("MongoDB connected successfully!");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1); // Stop the server if DB connection fails
+  }
+};
+connectDB();
 
 const todoSchema = new mongoose.Schema(
   {
