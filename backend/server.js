@@ -3,10 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors'); // 1. Import CORS
 require("dotenv").config();
-
 // Create an instance of express
 const app = express();
-
 // 2. Setup your single, explicit CORS rule right here!
 app.use(cors({ 
   origin: 'https://f-zo9g.onrender.com',
@@ -14,19 +12,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-app.use(express.json()); // Parsing JSON middleware
-
-// connecting mongodb
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => {
-//     console.log("MongoDB Connected");
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });                          //====OLD
-const mongoose = require('mongoose');
-
+app.use(express.json()); // Parsing JSON middleware         
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DATABASE_URL);
@@ -37,7 +23,6 @@ const connectDB = async () => {
   }
 };
 connectDB();
-
 const todoSchema = new mongoose.Schema(
   {
     title: {
