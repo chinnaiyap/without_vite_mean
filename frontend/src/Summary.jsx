@@ -24,8 +24,7 @@ export default function Summary() {
 
   // const apiUrl = "http://localhost:8000";
   const apiUrl = "https://backend-gkms.onrender.com";
-  // const apiUrl = import.meta.env.VITE_API_URL;
-
+  
   // Summary data
   //=========NEW=========//
   useEffect(() => {
@@ -42,21 +41,6 @@ export default function Summary() {
       setData([]);
     });
 }, []);
-  //=========NEW=========//
-  // useEffect(() => {
-  //   fetch(`${apiUrl}/todos/summary`)
-  //     .then((res) => res.json())
-  //     // .then((res) => {
-  //     //   setData(res.summary);
-  //     //   setTotal(res.totalTodos);
-  //     // });     //=========OLD=========//
-  //     //=========NEW=========//
-  //     .then((res) => {
-  //       setData(res.summary || []);
-  //       setTotal(res.totalTodos || 0);
-  //     });
-  //   //=========NEW=========//
-  // }, []);
 
   // Open modal and get todos by location
   const handleView = (item) => {
