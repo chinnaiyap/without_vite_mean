@@ -12,7 +12,7 @@ export default function TodoList({
   handleEdit,
   handleUpdate,
   handleDelete,
-  handleEditCancel,
+  handleEditCancel, 
   pageType,
 }) {
   return (

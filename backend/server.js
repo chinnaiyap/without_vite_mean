@@ -1,4 +1,10 @@
 // //Using Express
+
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const User = require("./models/User");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -43,7 +49,94 @@ const todoSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-//  ADD INDEXES HERE (IMPORTANT POSITION)
+//==========Register API ==========//
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({
+      email,
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists",
+      });
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
+
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    await user.save();
+
+    res.status(201).json({
+      message: "User Registered",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+//==========Register API ==========//
+
+//==========Login API ==========//
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user =
+      await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid Email",
+      });
+    }
+
+    const isMatch =
+      await bcrypt.compare(
+        password,
+        user.password
+      );
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Invalid Password",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.json({
+      token,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+//==========Login API ==========//
+
+
+
+//=== ADD INDEXES HERE (IMPORTANT POSITION) ==/
 todoSchema.index({ createdAt: -1 });
 todoSchema.index({ location: "text", title: "text" });
 

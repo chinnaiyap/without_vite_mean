@@ -29,17 +29,15 @@ export default function Todo() {
     getItems();
   };
 
-// Edit
+  // Edit
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDesciption] = useState("");
   const [editLocation, setEditLocation] = useState("");
 
-  
-  // const apiUrl = "http://localhost:8000";
-  const apiUrl = process.env.REACT_APP_API_URL;
-  
+  // const apiUrl = import.meta.env.VITE_API;
+  const apiUrl = "http://localhost:8000";
 
-const handleSubmit = () => {
+  const handleSubmit = () => {
     //Supmit
     setError("");
     //check inputs
@@ -229,7 +227,8 @@ const handleSubmit = () => {
         style={{ backgroundColor: "#1d5058" }}
       >
         <h1 className="fw-bold">ToDo Project with MERN Stack</h1>
-    </div>
+
+      </div>
 
       {/* Add Item */}
       <div className="card shadow-sm p-3 mb-4">
