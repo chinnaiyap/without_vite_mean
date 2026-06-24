@@ -7,11 +7,17 @@ export default function LocationTodos() {
 
   const { city } = useParams();
 
-  // const apiUrl = "http://localhost:8000";
-  const apiUrl = "https://backend-gkms.onrender.com";
+   const apiUrl = import.meta.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetch(`${apiUrl}/todos/location/${city}`)
+    const token = localStorage.getItem("token");
+    fetch(`${apiUrl}/todos/location/${city}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => setTodos(data));
   }, [city]);
