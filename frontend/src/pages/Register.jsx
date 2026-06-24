@@ -1,8 +1,9 @@
 //=======================================//
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import API_URL from "../services/api";
+// import API_URL from "../services/api";
 
+const apiUrl = import.meta.env.REACT_APP_API_URL;
 export default function Register() {
   const navigate = useNavigate();
 
@@ -83,7 +84,7 @@ export default function Register() {
     try {
       const response =
         await fetch(
-          `${API_URL}/api/auth/register`,
+          `${apiUrl}/api/auth/register`,
           {
             method: "POST",
             headers: {
